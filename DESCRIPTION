@@ -1,0 +1,6 @@
+Package: MeridianSysMemoryVault
+Type: Package
+Title: MeridianSysMemoryVault
+Version: 0.1.0
+License: MIT
+Description: Build an R toolkit that studies memory behavior through windowed input fixtures, with late-data behavior checks and single-node deterministic mode.
