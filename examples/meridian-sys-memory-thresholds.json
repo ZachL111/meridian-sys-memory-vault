@@ -1,0 +1,17 @@
+{
+  "repo": "meridian-sys-memory-vault",
+  "thresholds": {
+    "signal": 2,
+    "slack": 2,
+    "confidence": 1,
+    "drag": 4,
+    "ship": 190,
+    "watch": 127
+  },
+  "terms": [
+    "allocation pressure",
+    "dirty state",
+    "guard slack",
+    "layout drift"
+  ]
+}
