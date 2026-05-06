@@ -1,0 +1,73 @@
+{
+  "repo": "meridian-sys-memory-vault",
+  "language": "R",
+  "category": "Systems programming",
+  "goal": "Build an R toolkit that studies memory behavior through windowed input fixtures, with late-data behavior checks and single-node deterministic mode.",
+  "review_model": {
+    "terms": [
+      "allocation pressure",
+      "dirty state",
+      "guard slack",
+      "layout drift"
+    ],
+    "lanes": [
+      "ship",
+      "watch",
+      "hold"
+    ],
+    "score": "signal * 2 + slack + confidence - drag * 3",
+    "purpose": "surface the domain-specific cases that need the most careful review"
+  },
+  "cases": [
+    {
+      "name": "baseline",
+      "focus": "allocation pressure",
+      "signal": 50,
+      "slack": 38,
+      "drag": 8,
+      "confidence": 78,
+      "score": 192,
+      "lane": "ship"
+    },
+    {
+      "name": "stress",
+      "focus": "dirty state",
+      "signal": 80,
+      "slack": 51,
+      "drag": 25,
+      "confidence": 53,
+      "score": 189,
+      "lane": "ship"
+    },
+    {
+      "name": "edge",
+      "focus": "guard slack",
+      "signal": 81,
+      "slack": 28,
+      "drag": 10,
+      "confidence": 72,
+      "score": 232,
+      "lane": "ship"
+    },
+    {
+      "name": "recovery",
+      "focus": "layout drift",
+      "signal": 68,
+      "slack": 35,
+      "drag": 8,
+      "confidence": 51,
+      "score": 198,
+      "lane": "ship"
+    },
+    {
+      "name": "stale",
+      "focus": "allocation pressure",
+      "signal": 80,
+      "slack": 31,
+      "drag": 31,
+      "confidence": 46,
+      "score": 144,
+      "lane": "ship"
+    }
+  ]
+}

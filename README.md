@@ -1,67 +1,40 @@
 # meridian-sys-memory-vault
 
-`meridian-sys-memory-vault` explores systems programming in R. The repository keeps the core rule set compact, then surrounds it with examples that show how the decisions move.
+`meridian-sys-memory-vault` explores systems programming with a small R codebase and local fixtures. The technical goal is to build an R toolkit that studies memory behavior through windowed input fixtures, with late-data behavior checks and single-node deterministic mode.
 
-## Meridian Sys Memory Vault Notes
+## Why It Exists
 
-The quickest review path is the verifier first, then the fixtures, then the operations note. That order makes it easy to see whether the code, data, and explanation still agree.
+I want this repository to be useful as a quick reading exercise: fixtures first, implementation second, verifier last.
 
-## Why This Exists
+## Meridian Sys Memory Vault Review Notes
 
-This is not a wrapper around a service. It is a self-contained project that shows how the model behaves when demand, capacity, latency, risk, and weight move in different directions.
+`edge` and `stale` are the cases worth reading first. They show the optimistic and cautious ends of the fixture.
 
-## Code Tour
+## Features
 
-- `tests`: verification harness
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
+- `fixtures/domain_review.csv` adds cases for allocation pressure and dirty state.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/meridian-sys-memory-walkthrough.md` walks through the case spread.
+- The R code includes a review path for `guard slack` and `allocation pressure`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
-## Feature Notes
+## Architecture Notes
 
-- Includes extended examples for bounds checks, including `recovery` and `degraded`.
-- Documents low-level invariants tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
-- Stores project constants and verification metadata in `metadata/project.json`.
-- Adds a repository audit script that checks structure before running the language verifier.
+The repository has two validation layers: the original compact policy fixture and the domain review fixture. They are separate so one can change without hiding failures in the other.
 
-## Implementation Notes
+The R addition stays small enough to inspect in one sitting.
 
-The interesting part is the boundary between accepted and reviewed scenarios. Extended examples sit near that boundary so future edits can show whether the model became more permissive or more cautious. The R version keeps the model as simple functions over named lists for easy analysis use.
-
-## Local Setup
-
-Use a normal shell with R available on `PATH`. The verifier is written as a PowerShell script because the portfolio was assembled on Windows.
-
-## Example Scenarios
-
-The extended cases are not random smoke tests. `degraded` keeps pressure on the review path, while `recovery` shows the model when capacity and weight are strong enough to clear the threshold.
-
-## Try It
+## Usage
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
-
 ## Tests
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
+That command is also the regression path. It verifies the domain cases and catches mismatches between the CSV, metadata, and code.
 
-The audit command checks repository structure and README constraints before it delegates to the verifier.
+## Limitations And Roadmap
 
-## Roadmap
-
-- Add a comparison mode that shows how decisions change when one signal is adjusted.
-- Add a loader for `examples/extended_cases.csv` and promote selected cases into the language test suite.
-- Add a short report command that prints the score breakdown for a single scenario.
-- Add one more systems programming fixture that focuses on a malformed or borderline input.
-
-## Boundaries
-
-The fixture set is deliberately small. That keeps the review surface clear, but it also means the model should not be treated as a complete domain simulator.
+No external service is required. A deeper version would add more negative cases and a clearer boundary around invalid input.
